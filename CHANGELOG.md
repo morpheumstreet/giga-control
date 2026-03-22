@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.3.0] - 2026-03-22
+
+### Added
+- **Idea Similarity Detection & Deduplication** — New ideas are compared against existing ideas using text similarity. Ideas >90% similar to previously rejected ideas are auto-suppressed. Remaining similar ideas get a warning badge. Suppression audit trail stored in `idea_suppressions` table. ([PR #88](https://github.com/crshdn/mission-control/pull/88))
+- **Operator Chat Overhaul** — Floating chat widget accessible from any page. Threaded conversations per task with `@agent` mentions, command palette (`/status`, `/nudge`, `/checkpoint`), and unread message badges. Chat inbox shows all active conversations. ([PR #89](https://github.com/crshdn/mission-control/pull/89))
+- **Swipe Undo & Batch Review** — 10-second undo window after any swipe action (full rollback including task deletion for approved ideas). Batch review mode for reviewing multiple ideas in a table view with bulk actions. Configurable batch threshold per product. ([PR #90](https://github.com/crshdn/mission-control/pull/90))
+- **Product Program A/B Testing** — Create variants of the product program and run concurrent or alternating A/B tests. Research and ideation run against each variant independently. Statistical comparison of approval rates per variant. Promote winning variant or cancel test. ([PR #91](https://github.com/crshdn/mission-control/pull/91))
+- **Automated Rollback Pipeline** — GitHub webhook listens for merged PRs, CI failures, and status events. Post-merge health monitoring with configurable check intervals. Auto-creates revert PRs via GitHub API when failures detected. Rollback history with acknowledgment flow. ([PR #92](https://github.com/crshdn/mission-control/pull/92))
+- **Activity Dashboard Workspace Picker** — `/activity` page lists all workspaces with active/total task counts instead of hardcoding to the first workspace. ([PR #95](https://github.com/crshdn/mission-control/pull/95))
+
+### Fixed
+- **Knowledge entries FK on task delete** — `knowledge_entries.task_id` now nullified when a task is deleted, preventing dangling foreign key references. ([PR #93](https://github.com/crshdn/mission-control/pull/93))
+- **HMAC timing attack in GitHub webhook** — Signature verification now uses `crypto.timingSafeEqual()` instead of string equality comparison.
+- **Swipe undo rebuilds preferences & health** — Undoing a swipe now triggers preference model rebuild and health score recalculation, keeping both in sync.
+
+---
+
 ## [2.2.1] - 2026-03-22
 
 ### Added
